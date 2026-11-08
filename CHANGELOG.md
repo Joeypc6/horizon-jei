@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.3.0 — The recipe window and the mod kit (Joeypc6's fork)
+
+This fork adds, inside JEI itself, what the Horizon ports of AE2, Jade, Elevator, Iron Furnaces and Hostile Neural
+Networks each carried as a copy of their "JEI kit". Built and tested on Nightly `6560641`, with hook points 313.
+
+- **The recipe window**: JEI's centred window over the screen, with a tab per category along the top, the stations
+  each category is made on down the left, a title, a page bar and the recipes on cards.
+- **Where items come from** (Just Enough Resources' pages): Mob Drops from the loot tables, World Gen for ores and
+  other placed blocks, and the other sources a recipe table doesn't name.
+- **The panel on the creative screen**, beside the creative inventory.
+- **An API for mods**: `Provider` and `register` (`crate::game::hz_kit_layer_jei`) add a mod's own recipe tabs and
+  the stations of its categories.
+- **One copy for every mod**: the mods' kits (version 3 and later) see JEI's marker module `hz_jeikit_v<version>_jei`
+  and leave their own recipe window, sources, panel and provider API out of the build, using JEI's.
+  Their W guide (a port of AE2's LGPL guidebook) stays theirs and is not in this repository; the window reaches it
+  only through `if_guide!`, so JEI on its own builds without it.
+- Builds with JEI's own 0.2 viewer (`Viewer::with_variants`); the kit's macro crate `jei_optional` picks the API at
+  compile time.
+
 ## 0.2.0 — Overlay and bookmarks
 
 The overlay JEI is known for, on Horizon's screen hooks. It needs hook points

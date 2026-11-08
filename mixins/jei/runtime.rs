@@ -9,7 +9,7 @@
 /// The mod's id: its row, its settings folder and its keys.
 pub const ID: &str = "jei";
 pub const NAME: &str = "JEI";
-pub const VERSION: &str = "0.2.0";
+pub const VERSION: &str = "0.3.0";
 pub const DESCRIPTION: &str = "An item and recipe viewer: every item beside container screens, with search, recipes, uses and bookmarks.";
 
 /// The hook points' version this build needs: the newest point it hooks
@@ -1552,7 +1552,7 @@ impl Viewer {
 mod tests {
     #[test]
     fn title_has_name_and_version() {
-        assert_eq!(super::title(), "JEI 0.2.0");
+        assert_eq!(super::title(), "JEI 0.3.0");
     }
 
     #[test]
