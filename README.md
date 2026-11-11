@@ -23,6 +23,15 @@ container screens:
 - **Config**: `config/jei/jei.cfg` holds the list's order (`/jei sort name|id`)
   and the two toggles on the mod's settings page (tooltip hints, the bar).
 
+Since then (see `CHANGELOG.md`): JEI's recipe window with a tab per category,
+Just Enough Resources' sources, the panel on the creative screen, an API for
+other mods' recipe tabs, and one copy of the mod kit shared by every port
+(kit 14). Recipe cards draw fluids as their textures (the still sprite,
+tinted and tiled, as JEI's fluid renderer), never as buckets. Last built on
+Horizon commit `fdc87ae` (Nightly 2026-11-08) with AE2, Jade, Elevator, Iron
+Furnaces, Hostile Neural Networks, Tinkers' Construct, Ender IO, Powah and
+Apothic Spawners, all ten together, and checked in game on their recipe cards.
+
 See [`docs/jei-parity.md`](docs/jei-parity.md) for the feature-by-feature state
 against JEI.
 

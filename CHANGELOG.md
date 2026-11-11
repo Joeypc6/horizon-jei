@@ -18,6 +18,12 @@ Networks each carried as a copy of their "JEI kit". Built and tested on Nightly 
   only through `if_guide!`, so JEI on its own builds without it.
 - Builds with JEI's own 0.2 viewer (`Viewer::with_variants`); the kit's macro crate `jei_optional` picks the API at
   compile time.
+- **Kit 14, fluids as textures**: a recipe card's fluid slot always draws the fluid's still texture, tinted and tiled
+  16 px at a time as JEI's fluid renderer does, filled from the bottom by amount over capacity. It looks the sprite
+  up under the common mod paths (`<path>_still`, `fluid/<path>_still`, `fluid/<path>/still`, `<path>/still`) and
+  draws the missing-texture square when there is none, never a bucket. A slot's `bucket` field is ignored. Built on
+  Nightly `fdc87ae` (2026-11-08) with all ten ported mods and checked on Tinkers' casting, Ender IO's combustion
+  generator and Powah's magmatic fluids.
 
 ## 0.2.0 — Overlay and bookmarks
 
