@@ -20,5 +20,6 @@ trademark of Mojang Synergies AB. This mod contains no Minecraft code or assets;
 it reads the game's own files at run time.
 
 The recipe window, the Mob Drops and World Gen pages and the creative panel (mixins/jei/kit_*.rs) come from the
-JEI kit of the Horizon ports by Joeypc6. The source pages follow Just Enough Resources by way2muchnoise (MIT),
+JEI kit of the Horizon ports by Joeypc6, who wrote them and contributes them here under this repository's MIT
+License (the ports' own licences cover their other code; none of it is in these files). The source pages follow Just Enough Resources by way2muchnoise (MIT),
 https://github.com/way2muchnoise/JustEnoughResources.

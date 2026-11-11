@@ -1,13 +1,13 @@
 [mod]
 id = "jei"
-version = "0.3.0"
+version = "0.2.0"
 priority = 100
 
 # The commit this bundle was tested on (Nightly 2026-11-07). It hooks only the
 # native hook points, so the launcher builds it on any Horizon whose hook
 # points are version 313 or later (compatibility.json, "hooks").
 [compatibility]
-horizon_revision = "6560641ba51a452f6bc2407baa4eb1b3be517ca8"
+horizon_revision = "fdc87aecdbd116bf1e08adcd062fcbaea8c2e2ca"
 
 # runtime.rs becomes the module crate::game::jei.
 [[module]]
@@ -181,6 +181,12 @@ name = "hz_kit_collection_jei"
 source = "kit_collection.rs"
 
 [[module]]
+id = "jei-kit-math"
+file = "crates/horizon-client/src/game.rs"
+name = "hz_kit_math_jei"
+source = "kit_math.rs"
+
+[[module]]
 id = "jei-kit-collection-size"
 file = "crates/horizon-client/src/game/native_panel.rs"
 name = "hz_kit_panel_jei"
@@ -297,6 +303,28 @@ bindings = [
 ]
 
 [[injection]]
+id = "jei-kit-slot-tip"
+priority = 110
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::stations::Game<'_>::draw_slot_tooltip"
+helper = "kit_slot_tip.rs"
+bindings = [
+  { name = "game", ty = "&crate::game::Game<'_>", value = "&*self" },
+]
+
+[[injection]]
+id = "jei-kit-screen-tip"
+priority = 110
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::native_hooks::Game<'_>::draw_native_screen_tooltip"
+helper = "kit_screen_tip.rs"
+bindings = [
+  { name = "game", ty = "&crate::game::Game<'_>", value = "&*self" },
+]
+
+[[injection]]
 id = "jei-kit-panel-tint"
 priority = 110
 kind = "HEAD"
@@ -346,6 +374,6 @@ bindings = [
 [[module]]
 id = "jei-kit-marker"
 file = "crates/horizon-client/src/game.rs"
-name = "hz_jeikit_v3_jei"
+name = "hz_jeikit_v14_jei"
 source = "kit_marker.rs"
 # ---- END JEI KIT

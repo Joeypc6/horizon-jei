@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.3.0 — The recipe window and the mod kit (Joeypc6's fork)
+## Unreleased — The recipe window and the mod kit
 
-This fork adds, inside JEI itself, what the Horizon ports of AE2, Jade, Elevator, Iron Furnaces and Hostile Neural
+This adds, inside JEI itself, what the Horizon ports of AE2, Jade, Elevator, Iron Furnaces and Hostile Neural
 Networks each carried as a copy of their "JEI kit". Built and tested on Nightly `6560641`, with hook points 313.
 
 - **The recipe window**: JEI's centred window over the screen, with a tab per category along the top, the stations
