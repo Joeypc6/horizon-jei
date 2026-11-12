@@ -67,10 +67,39 @@ fn choose_mod(input: TokenStream) -> TokenStream {
 }
 
 /// JEI carries the kit's JEI parts itself (Joeypc6/horizon-jei adds the marker `hz_jeikit_v<version>_jei`): the
-/// recipe window, the sources, the creative panel and `Provider`. Then the mods' copies leave theirs out and use JEI's,
-/// and only the W guide (AE2's, kept out of JEI) still comes from the newest copy.
+/// recipe window, the sources, the creative panel and `Provider`. When its copy is at least as new as the newest mod's,
+/// the mods' copies leave theirs out and use JEI's, and only the W guide (AE2's, kept out of JEI) still comes from the
+/// newest copy. When JEI's is older (an older JEI installed), the newest mod's copy keeps its own JEI parts, under its
+/// own names (`hz_kit_window_<mod>`), so mods built for a newer kit still compile.
+fn version_of(name: &str) -> Option<u32> {
+    name.split('_').next()?.parse().ok()
+}
+
+/// The version of the kit JEI carries, if it carries one.
+fn jei_kit() -> Option<u32> {
+    let game = game_rs();
+    let at = game.find("mod hz_jeikit_v")?;
+    version_of(&game[at + "mod hz_jeikit_v".len()..])
+}
+
+/// The newest kit a mod's copy in the build carries (what the mods' code needs of JEI's parts); 0 with none.
+fn needed() -> u32 {
+    let game = game_rs();
+    game.match_indices("mod hz_kit_v").filter_map(|(at, _)| version_of(&game[at + "mod hz_kit_v".len()..])).max().unwrap_or(0)
+}
+
+/// JEI's copies before this one (kit 15) always compile their JEI parts, whatever the mods carry.
+const VERSION_AWARE: u32 = 15;
+
+/// The mods use JEI's parts: JEI's kit is new enough for every mod's.
 fn jei_provides() -> bool {
-    game_rs().contains("mod hz_jeikit_v")
+    jei_kit().is_some_and(|v| v >= needed())
+}
+
+/// JEI's parts are compiled although the mods don't use them (an older JEI, from before kit 15): the mods' window
+/// closes JEI's so the player sees one.
+fn jei_stale() -> bool {
+    jei_kit().is_some_and(|v| v < VERSION_AWARE && v < needed())
 }
 
 /// The kit's parts JEI carries when it does.
@@ -78,11 +107,23 @@ const JEI_PARTS: [&str; 5] = ["layer", "window", "collection", "panel", "creativ
 
 fn choose_kit(input: TokenStream, needs_jei: bool) -> TokenStream {
     let (id, kept, otherwise) = parts(input);
+    if id == "jei" {
+        // JEI's own copy (kit 15 on): only when the mods use it.
+        return if needs_jei && jei_provides() { kept } else { otherwise };
+    }
     if needs_jei && jei_provides() {
-        return if id == "jei" { kept } else { otherwise };
+        return otherwise;
     }
     let wins = winner().as_deref() == Some(id.as_str());
     if wins && (!needs_jei || in_build("jei")) { kept } else { otherwise }
+}
+
+/// A block's value, kept while an older JEI's window is compiled beside this copy's: `if_jei_stale!("jei", { ... }
+/// else { ... })`.
+#[proc_macro]
+pub fn if_jei_stale(input: TokenStream) -> TokenStream {
+    let (_, kept, otherwise) = parts(input);
+    block(if jei_stale() { kept } else { otherwise })
 }
 
 /// Items, kept or left out: `if_mod_items!("jade", { ... });`.

@@ -374,6 +374,6 @@ bindings = [
 [[module]]
 id = "jei-kit-marker"
 file = "crates/horizon-client/src/game.rs"
-name = "hz_jeikit_v14_jei"
+name = "hz_jeikit_v15_jei"
 source = "kit_marker.rs"
 # ---- END JEI KIT
