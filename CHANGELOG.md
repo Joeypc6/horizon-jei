@@ -24,6 +24,19 @@ Networks each carried as a copy of their "JEI kit". Built and tested on Nightly 
   draws the missing-texture square when there is none, never a bucket. A slot's `bucket` field is ignored. Built on
   Nightly `fdc87ae` (2026-11-08) with all ten ported mods and checked on Tinkers' casting, Ender IO's combustion
   generator and Powah's magmatic fluids.
+- **Kit 15, any JEI version**: a mod uses JEI's copy of the kit only when JEI's marker version is at least the
+  newest kit among the ports in the build; otherwise the newest port compiles its own copy, so mods no longer fail to
+  compile next to an older JEI.
+
+## 0.2.1 — World switch cache fix
+
+A patch release fixing viewer cache persistence across world transitions when JEI is disabled:
+
+- **Fix:** Clear cached viewer on world unload even while JEI is disabled. Previously, `sync` returned early when `native_on(jei::ID)` was false before the unload branch, leaving the old world's viewer in memory across world switches.
+- **Session management:** Encapsulate viewer lifecycle into `Session` in `runtime.rs`, ensuring the cache is unconditionally cleared upon leaving a world.
+- **Regression test:** Cover the disable -> switch worlds -> re-enable lifecycle sequence.
+
+Verified with `cargo test` (44) and `native.py check` on Nightly `6560641`.
 
 ## 0.2.0 — Overlay and bookmarks
 
